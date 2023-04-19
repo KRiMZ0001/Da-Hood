@@ -79,7 +79,7 @@ end
 local function EggFarm()
     while true do wait()
         for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
-            if v:IsA("MeshPart") then
+            if v:IsA("MeshPart") and v.Name ~= "Part" then
                 _G.EggFarm = false
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
                 wait(1)
