@@ -1,3 +1,4 @@
+_G.EggFarm = true
 -- Ac
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
@@ -10,7 +11,7 @@ local opens = Cashiers:GetDescendants()
 local num_opens = #opens
 
 local function clickLoop()
-    while true do
+    while _G.EggFarm do
         vu:Button1Down(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
         wait()
         vu:Button1Up(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
@@ -49,16 +50,25 @@ function Farm1Loop()
 end
 
 function OpensLoop()
-   while _G.EggFarm do
-       for i = 1, num_opens do
-           if opens[i].Name == "Open" then
-               Lpr.Character.HumanoidRootPart.CFrame = opens[i].CFrame
-               wait(12)
-           end
-       end
-   i = 1
-   wait(10)
-   end
+    while _G.EggFarm do
+        local foundHumanoid = false
+        for _, cashier in pairs(game:GetService("Workspace").Cashiers:GetChildren()) do
+            local humanoid = cashier:FindFirstChildOfClass("Humanoid")
+            if humanoid and humanoid.Health > 0 and humanoid.Health <= 100 then
+                local open = cashier:FindFirstChild("Open")
+                if open then
+                    Lpr.Character.HumanoidRootPart.CFrame = open.CFrame
+                    wait(10)
+                    foundHumanoid = true
+                end
+            end
+        end
+        if not foundHumanoid then
+            Lpr.Character.HumanoidRootPart.CFrame = CFrame.new(173.577759, 161.624985, -730.403442, 0, 0, 1, 1, 0, 0, 0, 1, 0)
+            wait(3)
+        end
+        wait()
+    end    
 end
 
 local function EggFarm()
@@ -80,5 +90,4 @@ coroutine.wrap(OpensLoop)()
 coroutine.wrap(clickLoop)()
 wait(2)
 coroutine.wrap(EggFarm)()
-
 
