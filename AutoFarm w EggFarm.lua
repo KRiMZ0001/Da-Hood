@@ -2,9 +2,10 @@
 repeat wait() until game:IsLoaded()
 
 _G.EggFarm = true
--- Ac
+--// Anti-Cheat Bypass
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
+--// Earned Cash
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/CashEarned.lua"))()
 
 local vu = game:GetService("VirtualUser")
