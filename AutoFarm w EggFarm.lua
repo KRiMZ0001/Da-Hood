@@ -16,7 +16,7 @@ local opens = Cashiers:GetDescendants()
 local num_opens = #opens
 
 local function clickLoop()
-    while _G.EggFarm do
+    while true do wait()
         vu:Button1Down(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
         wait()
         vu:Button1Up(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
