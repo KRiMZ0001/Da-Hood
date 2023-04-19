@@ -1,4 +1,3 @@
--- // Ensure is Da Hood (put in autoexec)
 if (game.PlaceId ~= 2788229376) then
     return
 end
