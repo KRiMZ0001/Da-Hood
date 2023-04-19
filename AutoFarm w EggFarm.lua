@@ -5,6 +5,7 @@ _G.EggFarm = true
 -- Ac
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/CashEarned.lua"))()
 
 local vu = game:GetService("VirtualUser")
 local Lpr = game:GetService("Players").LocalPlayer
