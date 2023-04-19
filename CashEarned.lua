@@ -1,4 +1,3 @@
--- create the UI
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 
@@ -9,15 +8,13 @@ TotalCashEarnedLabel.Position = UDim2.new(0.8, 0, 0, 0)
 TotalCashEarnedLabel.Font = Enum.Font.SourceSans
 TotalCashEarnedLabel.TextSize = 20
 TotalCashEarnedLabel.TextColor3 = Color3.new(1, 1, 1)
-TotalCashEarnedLabel.BackgroundTransparency = 1
+TotalCashEarnedLabel.BackgroundTransparency = 0.5
 TotalCashEarnedLabel.Text = "Total cash earned: 0"
 TotalCashEarnedLabel.Parent = ScreenGui
 
--- get the initial currency value
 local player = game:GetService("Players").LocalPlayer
 local startingCurrency = player.DataFolder.Currency.Value
 
--- function to update the cash earned label
 local function updateCashEarnedLabel()
     local endingCurrency = player.DataFolder.Currency.Value
     local totalCashEarned = endingCurrency - startingCurrency
@@ -30,7 +27,6 @@ local function updateCashEarnedLabel()
     TotalCashEarnedLabel.Text = "Total cash earned: " .. formattedCashEarned
 end
 
--- update the cash earned label initially
 updateCashEarnedLabel()
 
 -- connect the currency value change event to update the cash earned label
