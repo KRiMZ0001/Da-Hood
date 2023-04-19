@@ -1,3 +1,6 @@
+
+repeat wait() until game:IsLoaded()
+
 _G.EggFarm = true
 -- Ac
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
