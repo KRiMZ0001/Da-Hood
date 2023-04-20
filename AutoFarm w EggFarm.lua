@@ -77,16 +77,39 @@ function OpensLoop()
 end
 
 local function EggFarm()
-    while true do wait()
-        for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
-            if v:IsA("MeshPart") and v.Name ~= "Part" then
-                _G.EggFarm = false
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                wait(1)
-                _G.EggFarm = true
-            end
+local eggPartNamePattern = "Egg%d+" -- Match any part name starting with "Egg" followed by one or more digits
+local eggPart = nil
+local eggsCollected = 0
+
+-- Create the UI element
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game:GetService("CoreGui")
+
+local TotalCashEarnedLabel = Instance.new("TextLabel")
+TotalCashEarnedLabel.Name = "TotalCashEarnedLabel"
+TotalCashEarnedLabel.Size = UDim2.new(0, 200, 0, 50)
+TotalCashEarnedLabel.Position = UDim2.new(0.8, 0, 0, 59)
+TotalCashEarnedLabel.Font = Enum.Font.SourceSans
+TotalCashEarnedLabel.TextSize = 20
+TotalCashEarnedLabel.TextColor3 = Color3.new(1, 1, 1)
+TotalCashEarnedLabel.BackgroundTransparency = 0.5
+TotalCashEarnedLabel.Text = "Total Eggs Collected: 0"
+TotalCashEarnedLabel.Parent = ScreenGui
+
+while true do
+    wait()
+    for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
+        if v:IsA("MeshPart") and v.Name:match(eggPartNamePattern) then
+            _G.EggFarm = false
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(1)
+            _G.EggFarm = true
+            eggsCollected = eggsCollected + 1
+            TotalCashEarnedLabel.Text = "Total Eggs Collected: " .. eggsCollected
+            break
         end
     end
+end
 end
 
 coroutine.wrap(Farm1)()
