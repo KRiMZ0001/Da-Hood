@@ -77,11 +77,10 @@ function OpensLoop()
 end
 
 local function EggFarm()
-local eggPartNamePattern = "Egg%d+" -- Match any part name starting with "Egg" followed by one or more digits
+local eggPartNamePattern = "Egg%d+"
 local eggPart = nil
 local eggsCollected = 0
 
--- Create the UI element
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 
