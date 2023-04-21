@@ -24,7 +24,7 @@ local Drop = game:GetService("Workspace").Ignored.Drop
 local Cashiers = game:GetService("Workspace").Cashiers
 local opens = Cashiers:GetDescendants()
 local initialWaitTime = 0.5
-local tweenDuration = 1
+local tweenDuration = 1.5
 local num_opens = #opens
 
 local function moveTo(position)
