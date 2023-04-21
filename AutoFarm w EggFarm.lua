@@ -98,7 +98,7 @@ TotalCashEarnedLabel.Parent = ScreenGui
 while true do
     wait()
     for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
-        if v:IsA("MeshPart") and v.Name:match(eggPartNamePattern) then
+        if v:IsA("MeshPart") and v.Name:match(eggPartNamePattern) then wait(1.5)
             _G.EggFarm = false
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
             wait(1)
