@@ -1,22 +1,41 @@
-
 repeat wait() until game:IsLoaded()
 
 _G.EggFarm = true
+_G.Clicker = true
 --// Anti-Cheat Bypass
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
 --// Earned Cash
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/CashEarned.lua"))()
 
+--// Destroy Every Single Seat
+for _,a in pairs(workspace:GetDescendants()) do
+    if a:IsA("Seat") then
+        a:Remove()
+    end
+end
+
+
 local vu = game:GetService("VirtualUser")
 local Lpr = game:GetService("Players").LocalPlayer
+local cashiers = game:GetService("Workspace").Cashiers
+local lprRoot = Lpr.Character.HumanoidRootPart
 local Drop = game:GetService("Workspace").Ignored.Drop
 local Cashiers = game:GetService("Workspace").Cashiers
 local opens = Cashiers:GetDescendants()
+local initialWaitTime = 0.5
+local tweenDuration = 1
 local num_opens = #opens
 
+local function moveTo(position)
+    local tweenInfo = TweenInfo.new(tweenDuration)
+    local tween = game:GetService("TweenService"):Create(lprRoot, tweenInfo, {CFrame = position})
+    tween:Play()
+    tween.Completed:Wait()
+end
+
 local function clickLoop()
-    while true do wait()
+    while _G.Clicker do wait()
         vu:Button1Down(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
         wait()
         vu:Button1Up(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
@@ -55,25 +74,29 @@ function Farm1Loop()
 end
 
 function OpensLoop()
-    while _G.EggFarm do
-        local foundHumanoid = false
-        for _, cashier in pairs(game:GetService("Workspace").Cashiers:GetChildren()) do
-            local humanoid = cashier:FindFirstChildOfClass("Humanoid")
-            if humanoid and humanoid.Health > 0 and humanoid.Health <= 100 then
-                local open = cashier:FindFirstChild("Open")
-                if open then
-                    Lpr.Character.HumanoidRootPart.CFrame = open.CFrame
-                    wait(10)
-                    foundHumanoid = true
-                end
+while _G.EggFarm do
+    local foundHumanoid = false
+    for _, cashier in pairs(cashiers:GetChildren()) do
+        local humanoid = cashier:FindFirstChildOfClass("Humanoid")
+        if humanoid and humanoid.Health > 0 and humanoid.Health <= 100 then
+            local open = cashier:FindFirstChild("Open")
+            if open then
+                moveTo(open.CFrame)
+                wait(0.5) -- Wait a short amount of time to ensure that we've arrived at the cashier
+                lprRoot.Anchored = true -- Anchor the player's root part
+                wait(9) -- Wait for 9 seconds
+                lprRoot.Anchored = false -- Unanchor the player's root part
+                wait(3) -- Wait for 3 seconds before continuing
+                foundHumanoid = true
             end
         end
-        if not foundHumanoid then
-            Lpr.Character.HumanoidRootPart.CFrame = CFrame.new(173.577759, 161.624985, -730.403442, 0, 0, 1, 1, 0, 0, 0, 1, 0)
-            wait(3)
-        end
-        wait()
-    end    
+    end
+    if not foundHumanoid then
+        moveTo(CFrame.new(173.577759, 161.624985, -730.403442)) -- Move to the starting position using a tween
+        wait(3) -- Wait for 3 seconds before continuing
+    end
+    wait(initialWaitTime)
+end
 end
 
 local function EggFarm()
@@ -98,9 +121,11 @@ TotalCashEarnedLabel.Parent = ScreenGui
 while true do
     wait()
     for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
-        if v:IsA("MeshPart") and v.Name:match(eggPartNamePattern) then wait(1.5)
+        if v:IsA("MeshPart") and v.Child == "TouchInterest" then wait(0.5)
             _G.EggFarm = false
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+            firetouchinterest(lprRoot, v, 0)
+            wait(.5)
+            firetouchinterest(lprRoot, v, 1)
             wait(1)
             _G.EggFarm = true
             eggsCollected = eggsCollected + 1
@@ -117,4 +142,3 @@ coroutine.wrap(OpensLoop)()
 coroutine.wrap(clickLoop)()
 wait(2)
 coroutine.wrap(EggFarm)()
-
