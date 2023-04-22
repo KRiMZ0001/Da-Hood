@@ -1,4 +1,8 @@
 repeat wait() until game:IsLoaded()
+
+_G.EggFarm = true
+_G.Clicker = true
+
 --// Anti-Cheat Bypass
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
@@ -13,6 +17,9 @@ for _,a in pairs(workspace:GetDescendants()) do
 end
 
 
+
+
+--// Do Not Touch any of these
 local vu = game:GetService("VirtualUser")
 local Lpr = game:GetService("Players").LocalPlayer
 local cashiers = game:GetService("Workspace").Cashiers
@@ -21,7 +28,7 @@ local Drop = game:GetService("Workspace").Ignored.Drop
 local Cashiers = game:GetService("Workspace").Cashiers
 local opens = Cashiers:GetDescendants()
 local initialWaitTime = 0.5
-local tweenDuration = 1.5
+local tweenDuration = 2
 local num_opens = #opens
 
 local function moveTo(position)
@@ -32,7 +39,7 @@ local function moveTo(position)
 end
 
 local function clickLoop()
-    while true do wait()
+    while _G.Clicker do wait()
         vu:Button1Down(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
         wait()
         vu:Button1Up(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
@@ -41,7 +48,7 @@ local function clickLoop()
 end
 
 function Farm1()
-   while true do
+   while _G.EggFarm do
        for _,f in pairs(Lpr:FindFirstChildOfClass("Backpack"):GetChildren()) do
            if f:IsA("Tool") or f:IsA("HopperBin") then
                if f.Name == "Combat" then
@@ -79,11 +86,11 @@ while _G.EggFarm do
             local open = cashier:FindFirstChild("Open")
             if open then
                 moveTo(open.CFrame)
-                wait(0.5) -- Wait a short amount of time to ensure that we've arrived at the cashier
-                lprRoot.Anchored = true -- Anchor the player's root part
-                wait(9) -- Wait for 9 seconds
-                lprRoot.Anchored = false -- Unanchor the player's root part
-                wait(3) -- Wait for 3 seconds before continuing
+                wait(0.5)
+                lprRoot.Anchored = true
+                wait(9)
+                lprRoot.Anchored = false
+                wait(1)
                 foundHumanoid = true
             end
         end
@@ -120,9 +127,9 @@ while true do
     wait()
     for _, v in pairs(workspace.Ignored:GetDescendants()) do
         if v:IsA("TouchTransmitter") and v.Parent.Name:match(eggPattern) then
-            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- 0 is touch
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
             wait()
-            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
             wait(1)
                 eggsCollected = eggsCollected + 1
             TotalCashEarnedLabel.Text = "Total Eggs Collected: " .. eggsCollected
@@ -136,5 +143,4 @@ coroutine.wrap(Farm1)()
 coroutine.wrap(Farm1Loop)()
 coroutine.wrap(OpensLoop)()
 coroutine.wrap(clickLoop)()
-wait(2)
 coroutine.wrap(EggFarm)()
