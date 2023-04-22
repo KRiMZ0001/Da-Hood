@@ -1,7 +1,4 @@
 repeat wait() until game:IsLoaded()
-
-_G.EggFarm = true
-_G.Clicker = true
 --// Anti-Cheat Bypass
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KRiMZ0001/Da-Hood/main/Ac.lua"))()
 
@@ -35,7 +32,7 @@ local function moveTo(position)
 end
 
 local function clickLoop()
-    while _G.Clicker do wait()
+    while true do wait()
         vu:Button1Down(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
         wait()
         vu:Button1Up(Vector2.new(500, 0), game.Workspace.CurrentCamera.CFrame)
@@ -44,7 +41,7 @@ local function clickLoop()
 end
 
 function Farm1()
-   while _G.EggFarm do
+   while true do
        for _,f in pairs(Lpr:FindFirstChildOfClass("Backpack"):GetChildren()) do
            if f:IsA("Tool") or f:IsA("HopperBin") then
                if f.Name == "Combat" then
@@ -100,7 +97,8 @@ end
 end
 
 local function EggFarm()
-local eggPartNamePattern = "Egg%d+"
+local eggPattern = "Egg%d+"
+local workspace = game:GetService("Workspace")
 local eggPart = nil
 local eggsCollected = 0
 
@@ -120,15 +118,13 @@ TotalCashEarnedLabel.Parent = ScreenGui
 
 while true do
     wait()
-    for i, v in pairs(game:GetService("Workspace").Ignored:GetChildren()) do
-        if v:IsA("MeshPart") and v.Child == "TouchInterest" then wait(0.5)
-            _G.EggFarm = false
-            firetouchinterest(lprRoot, v, 0)
-            wait(.5)
-            firetouchinterest(lprRoot, v, 1)
+    for _, v in pairs(workspace.Ignored:GetDescendants()) do
+        if v:IsA("TouchTransmitter") and v.Parent.Name:match(eggPattern) then
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- 0 is touch
+            wait()
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
             wait(1)
-            _G.EggFarm = true
-            eggsCollected = eggsCollected + 1
+                eggsCollected = eggsCollected + 1
             TotalCashEarnedLabel.Text = "Total Eggs Collected: " .. eggsCollected
             break
         end
