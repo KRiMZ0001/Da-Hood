@@ -1,0 +1,33 @@
+local eggPattern = "Egg%d+"
+local workspace = game:GetService("Workspace")
+local eggPart = nil
+local eggsCollected = 0
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game:GetService("CoreGui")
+
+local TotalCashEarnedLabel = Instance.new("TextLabel")
+TotalCashEarnedLabel.Name = "TotalCashEarnedLabel"
+TotalCashEarnedLabel.Size = UDim2.new(0, 200, 0, 50)
+TotalCashEarnedLabel.Position = UDim2.new(0.8, 0, 0, 59)
+TotalCashEarnedLabel.Font = Enum.Font.SourceSans
+TotalCashEarnedLabel.TextSize = 20
+TotalCashEarnedLabel.TextColor3 = Color3.new(1, 1, 1)
+TotalCashEarnedLabel.BackgroundTransparency = 0.5
+TotalCashEarnedLabel.Text = "Total Eggs Collected: 0"
+TotalCashEarnedLabel.Parent = ScreenGui
+
+while true do
+    wait()
+    for _, v in pairs(workspace.Ignored:GetDescendants()) do
+        if v:IsA("TouchTransmitter") and v.Parent.Name:match(eggPattern) then
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+            wait()
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            wait(1)
+                eggsCollected = eggsCollected + 1
+            TotalCashEarnedLabel.Text = "Total Eggs Collected: " .. eggsCollected
+            break
+        end
+    end
+end
